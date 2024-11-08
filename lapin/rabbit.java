@@ -16,7 +16,7 @@ public class rabbit{
     public rabbit(){
         age = 0;
         alive = true;
-        setSex(0);
+        setSex(uniform(0, 1));
         setrate(age);
     }
     public rabbit(int s){
@@ -48,7 +48,7 @@ public class rabbit{
         }
     }
     public void setSex(int genre){
-        if (genre == 1){
+        if (genre <= 1){
             sex = true;
         }
         else{
@@ -67,6 +67,10 @@ public class rabbit{
                 rateofliving = rateofliving - 0.10;
             }
         }
+        
+    }
+    public double getrateliv(){
+            return rateofliving;
     }
     public void veillissement(){
         setAge(age + 1);
