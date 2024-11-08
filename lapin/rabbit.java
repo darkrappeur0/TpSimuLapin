@@ -1,5 +1,5 @@
 package lapin;
-import lapin.mt.*;
+
 
 public class rabbit{
     private int age;
@@ -8,6 +8,17 @@ public class rabbit{
     private double rateofliving;
     
 
+    public int uniform(int a , int b){
+        int x = (int) Math.round( Math.random() * (b - a) );
+        System.out.println("uniform " + x);
+        return x;
+    }
+    public rabbit(){
+        age = 0;
+        alive = true;
+        setSex(0);
+        setrate(age);
+    }
     public rabbit(int s){
         age = 0;
         alive = true;
@@ -56,5 +67,8 @@ public class rabbit{
                 rateofliving = rateofliving - 0.10;
             }
         }
+    }
+    public void veillissement(){
+        setAge(age + 1);
     }
 }
