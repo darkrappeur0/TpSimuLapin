@@ -1,42 +1,92 @@
-import lapin.*;
+
 
 
 
 public class Central{
-    private static rabbit rab[];
+    private static lapinfemale[] rab;
     private static int compteur = 0 ;
+    private static int n = 100000;
     public static void main(String[] argv){
-        System.out.println("coucou");
-        lapinfemale rabi = new lapinfemale() ;
-        compteur = compteur + 1;
-        rab[0] = rabi;
-        System.out.println("coucou");
-        afficher(rabi);
-        System.out.println("coucou");
+        int x = 100;
+        System.out.println("début de l'initialisation avec" + x +" lapin");
+        
+        compteur = x;
+        int f = 0;
+        while (f<10){
+            System.out.println("début de la simulation :");
+            f=f+1;
+            System.out.println("année : " + f);
+            rab = new lapinfemale[n];
+            
+        
+        for(int i =0;i<compteur;i++){
+            lapinfemale rab_i = new lapinfemale() ;
+            rab[i] = rab_i;
+        }
+        System.out.println("fin de l'initialisation");
+
+        //System.out.println("début de l'affichage des lapin");
+        for(int i = 0;i<compteur;i++){
+            afficher(rab[i]);
+            System.out.println(i);
+        }
+        //System.out.println("fin de l'affichage des lapin");
+        //System.out.println("début de la selection naturelle");
+        //killrabbit(compteur);
+
+        //System.out.println("début de l'affichage des lapin");
+        for(int i = 0;i<compteur;i++){
+            afficher(rab[i]);
+        }
+        System.out.println("fin de l'affichage des lapin");
+        System.out.println("début de la reproduction");
+        for(int i = 0;i<compteur;i++){
+            rab[i].genelitter();
+        }
+        System.out.println("fin de la reproduction");
+        System.out.println("veillissement");
         actuellisation(compteur);
-        //System.out.println("coucou");
-        //int r = rabi.getAge();
-        //System.out.println(r);
-        rabi.genelitter();
-        int g = rabi.getCompteur();
-        maj(g);
+
+        System.out.println("début de l'affichage des lapin");
+        System.out.println(compteur);
+        for(int i = 0;i<compteur;i++){
+            afficher(rab[i]);
+        }
+        System.out.println("fin de l'affichage des lapin");
+
+
+
+        System.out.println("début de l'ajout des nouveau nés");
+        for(int i = 0;i<compteur;i++){
+            int g = rab[i].getkittens();
+            maj(g);
+        }
+        System.out.println(compteur);
+        for(int i = 0;i<compteur;i++){
+            afficher(rab[i]);
+
+        }
+        
+        
+        
+    }
     }
 
-    private static void afficher(rabbit rab){
-        System.out.println(rab.getAge());
-        System.out.println(rab.isAlive());
+    private static void afficher(lapinfemale rab){
         if (rab.isAlive()){
             System.out.println("Il est vivant");
         }
         else{
             System.out.println("Il est mort");
         }
-        rab.whatSex();
+        
     }
 
-    private static void update(int x){
-        for(int i = 0; i < x; i++){
-            rab[i] = new rabbit();
+    private static void update(int x,int y){
+        for(int i = y; i < y + x; i++){
+            rab[i] = new lapinfemale();
+            compteur = compteur + 1;
+            System.out.println(compteur);
         }
     }
 
@@ -48,35 +98,43 @@ public class Central{
             }
             else{
                 rab[i].setAlive(false);
-                rabfree(i);
+                rab[i].isDead();
+                
             }
 
         }
     }
 
     private static void rabfree(int g){
-        rabbit rip = rab[g];
-        rab[g] = null;
-        decal_gauche();
-
+        decal_gauche(g);
     }
 
-    private static void decal_gauche(){
-        for(int i =0; i<compteur ; i++){
-            if(rab[i] == null){
-                if (rab[i + 1] != null ){
-                    while ( rab[i + 1 ]!=null){
-                        rab[i] = rab[i + 1];
-                        i=i+1;
-                    }
-                }
+    private static void decal_gauche(int g){
+        for(int i =g; i<compteur ; i++){  
+            while ( rab[i + 1 ]!=null){
+                rab[i] = rab[i + 1];
+                i=i+1;
             }
+            if(rab[i + 1 ]==null){
+                rab[i] = null;
+            }
+                
         }
+        
     }
 
     private static void actuellisation(int x){
-        for (int i = 0; i <x;i++ ){
-            rab[i].veillissement();
+        int i = 0;
+        while (i<x){
+            if(rab[i].isAlive()){
+                rab[i].veillissement();
+                i=i+1;
+            }
+            else{
+                rabfree(i);
+                compteur = compteur - 1;
+                x=x-1;
+            }
         }
     }
 
@@ -86,9 +144,7 @@ public class Central{
         return x;
     }
     public static void maj(int x){
-        compteur = compteur + x;
-        update(x);
-        System.out.println(x);
-        killrabbit(x);
+        update(x,compteur);
+        
     }
 }

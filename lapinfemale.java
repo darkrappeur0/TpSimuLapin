@@ -1,30 +1,58 @@
-package lapin;
 
 
-public class rabbit{
-    private int age;
+public class lapinfemale{
+    private int litterThisYear;
+    private int kittens = 0;
+    private static int compteurlap = 0;
+    private int age ;
     private boolean alive;
-    private boolean sex;    // false == male, true == female
     private double rateofliving;
-    
 
     public int uniform(int a , int b){
         int x = (int) Math.round( Math.random() * (b - a) );
         System.out.println("uniform " + x);
         return x;
     }
-    public rabbit(){
+
+    private void newlitter(){
+        litterThisYear = litterThisYear + 1;
+        int v = uniform(3,6);
+        kittens = kittens +  v;
+        compteurlap = compteurlap + v;
+    }
+    public void genelitter(){
+        if(isAlive()){
+        if (getAge() >= 1){
+            int nblitter = uniform(3,9);
+            for (int i =0; i<nblitter; i++){
+                newlitter();
+            }
+        }
+        }
+    }
+    public int getLitterTY(){
+        return litterThisYear;
+    }
+    public int getkittens(){
+        return kittens;
+    }
+    public void setkittens(int i){
+        kittens = i;
+    }
+    public lapinfemale(){
         age = 0;
         alive = true;
-        setSex(uniform(0, 1));
         setrate(age);
+        litterThisYear = 0;
+        kittens = 0;
     }
-    public rabbit(int s){
-        age = 0;
-        alive = true;
-        setSex(s);
-        setrate(age);
+    public int getCompteur(){
+        return compteurlap;
     }
+    public void isDead(){
+        compteurlap = compteurlap - 1;
+    }
+
 
 
     public int getAge(){
@@ -38,22 +66,6 @@ public class rabbit{
     }
     public void setAlive(boolean rip){
         alive = rip;
-    }
-    public void whatSex(){
-        if (sex == true){
-            System.out.println("it's a rabbit girl");
-        }
-        else{
-            System.out.println("It's a rabbit boy");
-        }
-    }
-    public void setSex(int genre){
-        if (genre <= 1){
-            sex = true;
-        }
-        else{
-            sex = false;
-        }
     }
     public void setrate(int age1){
         if (age < 1){
